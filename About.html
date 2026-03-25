@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mind Reader Training - I Can Read Your Mind</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep: #0a0014;
+    --void: #06000d;
+    --purple: #6b21d6;
+    --violet: #9b4dff;
+    --electric: #c084fc;
+    --gold: #fbbf24;
+    --gold-light: #fcd34d; 
+    --gold-dim: #d97706;
+    --teal: #2dd4bf;
+    --crimson: #f43f5e;
+    --text: #e8d5ff;
+    --muted: #9f7ec9;
+    --surface: rgba(107,33,214,0.12);
+    --border: rgba(155,77,255,0.3);
+    --bright-white: #ffffff;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    background: var(--void);
+    color: var(--text);
+    overflow-x: hidden;
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 40% 70%, rgba(192,132,252,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 10% 80%, rgba(255,255,255,0.4) 0%, transparent 100%);
+    pointer-events: none; z-index: 0;
+  }
+  #app { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; padding: 2rem 1rem; }
+  
+  header { text-align: center; margin-bottom: 2rem; }
+  .eye-container {
+    width: 60px; height: 60px;
+    margin: 0 auto 1rem;
+    position: relative;
+    animation: float 4s ease-in-out infinite;
+  }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  .eye-svg { width: 100%; height: 100%; filter: drop-shadow(0 0 10px rgba(155,77,255,0.8)); }
+  
+  h1 {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+    background: linear-gradient(135deg, var(--gold) 0%, var(--electric) 50%, var(--teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+  }
+  .subtitle { font-style: italic; color: var(--gold-light); font-size: 1rem; letter-spacing: 2px; }
+
+  .content-container { width: 100%; max-width: 800px; }
+  
+  section {
+    background: linear-gradient(135deg, rgba(107,33,214,0.1) 0%, rgba(10,0,20,0.4) 100%);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(10px);
+  }
+
+  h2 {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 1rem;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  p { margin-bottom: 1rem; color: var(--text); font-size: 1.1rem; }
+  
+  .instruction-list { list-style: none; }
+  .instruction-list li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .instruction-list li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: var(--electric);
+  }
+
+  .example-card {
+    background: rgba(10, 0, 20, 0.6);
+    border-left: 3px solid var(--teal);
+    padding: 1rem;
+    margin-top: 1.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.9rem;
+  }
+  .math-highlight { color: var(--gold-light); font-weight: bold; }
+  .secret-num { color: var(--crimson); font-weight: bold; text-decoration: underline; }
+
+  .footer-note { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 2rem; }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="eye-container">
+      <svg class="eye-svg" viewBox="0 0 80 80">
+        <defs>
+          <radialGradient id="eyeGrad" cx="50%" cy="50%">
+            <stop offset="0%" stop-color="#c084fc"/><stop offset="100%" stop-color="#6b21d6"/>
+          </radialGradient>
+        </defs>
+        <polygon points="40,5 75,68 5,68" fill="none" stroke="url(#eyeGrad)" stroke-width="2.5"/>
+        <ellipse cx="40" cy="44" rx="18" ry="12" fill="url(#eyeGrad)" opacity="0.9"/>
+        <circle cx="40" cy="44" r="7" fill="#0a0014"/>
+      </svg>
+    </div>
+    <h1>The Mind Reader</h1>
+    <p class="subtitle">Instruction Manual & Examples</p>
+  </header>
+
+  <div class="content-container">
+    <section>
+      <h2>Performance Protocol</h2>
+      <ul class="instruction-list">
+        <li>Introduce the app and invite participants to join via their smartphones[cite: 7].</li>
+        <li>Instruct them to enter a valid 5 to 10 digit number[cite: 8, 13]. Suggest a random phone number with area code for 10 digits[cite: 10].</li>
+        <li>Advise them to use various digits rather than repeating the same one[cite: 14].</li>
+        <li>Have them manually scramble those digits in any order they wish[cite: 15].</li>
+        <li>The audience app will subtract the smaller resulting number from the larger one[cite: 16].</li>
+        <li>Ask the participant to select any <strong>non-zero</strong> digit from the result to keep as their secret number[cite: 17, 18].</li>
+        <li>Have them read the remaining digits to you slowly[cite: 19, 20].</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>The Secret Method</h2>
+      <p>Close your eyes and rub your forehead to focus. Mentally add each number they read together[cite: 22].</p>
+      <p><strong>The Rule of Nine:</strong> While adding, never count the digit 9[cite: 32]. Find the closest multiple of 9 that is <em>below</em> your total sum. Subtract the difference from 9 to reveal their secret number[cite: 33, 35].</p>
+      
+      <div class="example-card">
+        <strong>Example 1</strong><br>
+        Original: 9876543 | Scrambled: 3456789<br>
+        Subtracted Result: 6419754<br>
+        If they chose <span class="secret-num">4</span>, they read: 6, 4, 1, 9, 7, 5.<br>
+        <span class="math-highlight">6 + 4 + 1 + 7 + 5 = 23</span> (Ignore the 9)<br>
+        Closest '9' below 23 is 18. Difference is 5. <br>
+        <span class="math-highlight">9 - 5 = 4</span>[cite: 33].
+      </div>
+
+      <div class="example-card">
+        <strong>Example 2</strong><br>
+        Original: 73915 | Scrambled: 19537<br>
+        Subtracted Result: 54378<br>
+        If they chose <span class="secret-num">5</span>, they read: 4, 3, 7, 8.<br>
+        <span class="math-highlight">4 + 3 + 7 + 8 = 22</span><br>
+        Closest '9' below 22 is 18. Difference is 4. <br>
+        <span class="math-highlight">9 - 4 = 5</span>[cite: 80].
+      </div>
+    </section>
+
+    <div class="footer-note">
+      This is an instructional app for performers. It is non-interactive[cite: 4, 5].
+    </div>
+  </div>
+</div>
+</body>
+</html>
